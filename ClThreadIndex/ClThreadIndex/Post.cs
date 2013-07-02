@@ -7,7 +7,7 @@ namespace ClThreadIndex
     {
         private String dq = "\"";
         public String UserName { get; set; }
-        public List<Image> Images = new List<Image>();
+        public List<Link> Links = new List<Link>();
         public String Gravatar { get; set; }
         public int PageNum { get; set; }
         
@@ -16,7 +16,7 @@ namespace ClThreadIndex
             getUserName(postSource);
             getGravatar(postSource);
             this.PageNum = pageNum;
-            getImages(postSource);
+            getLinks(postSource);
         }
 
         //Get Username
@@ -32,33 +32,33 @@ namespace ClThreadIndex
             this.Gravatar = getSingleString(postSource, "http://gravatar.com", "?");
         }
 
-        //Find all images in post
-        private void getImages(String postSource)
+        //Find all links in post
+        private void getLinks(String postSource)
         {
             String postContent = getSingleString(postSource, "<div class=" + dq + "formatted entry-content" + dq + ">", "</div>");
             List<String> links = getMultipleStrings(postContent, "http://", dq);
 
             foreach (var link in links)
             {
-                addImage(link, this.PageNum);
+                addLink(link, this.PageNum);
             }
         }
 
-        //Add Image to Post
-        public void addImage(String imageURL, int pageNum)
+        //Add Link to Post
+        public void addLink(String linkURL, int pageNum)
         {
-            bool imageFound = false;
-            foreach (var i in Images)
+            bool linkFound = false;
+            foreach (var i in Links)
             {
-                if (i.ImageURL == imageURL)
+                if (i.LinkURL == linkURL)
                 {
-                    imageFound = true;
+                    linkFound = true;
                     break;
                 }
             }
 
-            if (imageFound == false)
-                Images.Add(new Image(imageURL, pageNum));
+            if (linkFound == false)
+                Links.Add(new Link(linkURL, pageNum));
         }
 
         //Finds the first occurence of string within argument postSource using provided tokens to search.

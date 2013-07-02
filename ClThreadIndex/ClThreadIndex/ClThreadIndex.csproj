@@ -78,7 +78,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Image.cs" />
+    <Compile Include="Link.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="Program.cs" />

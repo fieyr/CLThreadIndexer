@@ -10,7 +10,7 @@ namespace ClThreadIndex
         public int PageNum { get; set; }
         public string BaseURL;
         public string PageSource { get; set; }
-        public List<Post> PostsHeavyWithImage = new List<Post>();
+        public List<Post> PostsHeavyWithLink = new List<Post>();
         public int PostCount { get; set; }
         public String ThreadTitle { get; set; }
 
@@ -26,7 +26,7 @@ namespace ClThreadIndex
 
         public bool getNextPage()
         {
-            PostsHeavyWithImage = new List<Post>();
+            PostsHeavyWithLink = new List<Post>();
             String url = this.BaseURL + this.PageNum;
             this.PageSource = getPage(url);
             bool result = getAllPosts();
@@ -83,9 +83,9 @@ namespace ClThreadIndex
                 postcount += 1;
                 this.PostCount += 1;
                 Post myPost = createPost(postSource);
-                if (myPost.Images.Count > 0)
+                if (myPost.Links.Count > 0)
                 {
-                    PostsHeavyWithImage.Add(myPost);
+                    PostsHeavyWithLink.Add(myPost);
                 }
 
                 postStart = PageSource.IndexOf(postStartToken, postEnd);

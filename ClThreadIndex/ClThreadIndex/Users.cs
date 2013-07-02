@@ -17,14 +17,14 @@ namespace ClThreadIndex
         }
         public void addUsers(Page myPage)
         {
-            foreach (var post in myPage.PostsHeavyWithImage)
+            foreach (var post in myPage.PostsHeavyWithLink)
             {
                 myUsers.Add(post);
             }
         }
 
         //Iterate sequentially through each post, get user, read forward to find all other posts created by that user.
-        //Add images to the first post from the posts found after the first. After images from each other post are added to the first, delete that other post.
+        //Add links to the first post from the posts found after the first. After links from each other post are added to the first, delete that other post.
         public void doTheCreep()
         {
             int current = 0;
@@ -36,9 +36,9 @@ namespace ClThreadIndex
                 {
                     if (myUsers[current].UserName == myUsers[reading].UserName)
                     {
-                        foreach (var image in myUsers[reading].Images)
+                        foreach (var link in myUsers[reading].Links)
                         {
-                            myUsers[current].addImage(image.ImageURL,image.PageNum);
+                            myUsers[current].addLink(link.LinkURL,link.PageNum);
                         }
                         myUsers.RemoveAt(reading);
                     }
@@ -82,17 +82,17 @@ namespace ClThreadIndex
                 s.AppendLine("\t\t</a>");
                 s.AppendLine("\t</div>");
                 
-                //Add Images and Image Info
-                int imageNum = 1;
-                foreach (var image in user.Images)
+                //Add Link and Link Info
+                int linkNum = 1;
+                foreach (var link in user.Links)
 	            {
                     s.AppendLine("\t<div class=" + dq + "links" + dq + ">");
                     s.AppendLine("\t\t<div class=" + dq + "linkset" + dq + ">");
-                    s.AppendLine("\t\t\t<a href=" + dq + this.BaseURL + image.PageNum + dq + " title=" + dq + "Page " + image.getPageNum() + dq + ">Page " + image.getPageNum() + "</a>");
-                    s.AppendLine("\t\t\t<a href=" + dq + image.ImageURL + dq + " title=" + dq + "Link " + imageNum + dq + ">Link " + imageNum + "</a>");
+                    s.AppendLine("\t\t\t<a href=" + dq + this.BaseURL + link.PageNum + dq + " title=" + dq + "Page " + link.getPageNum() + dq + ">Page " + link.getPageNum() + "</a>");
+                    s.AppendLine("\t\t\t<a href=" + dq + link.LinkURL + dq + " title=" + dq + "Link " + linkNum + dq + ">Link " + linkNum + "</a>");
                     s.AppendLine("\t\t</div>");
                     s.AppendLine("\t</div>");
-                    imageNum++;
+                    linkNum++;
 	            }
             }
 
