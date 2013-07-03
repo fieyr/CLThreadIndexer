@@ -36,10 +36,7 @@ namespace ClThreadIndex
                 {
                     if (myUsers[current].UserName == myUsers[reading].UserName)
                     {
-                        foreach (var link in myUsers[reading].Links)
-                        {
-                            myUsers[current].addLink(link.LinkURL,link.PageNum);
-                        }
+                        myUsers[current].acquireLinks(myUsers[reading].Links);
                         myUsers.RemoveAt(reading);
                     }
                     else

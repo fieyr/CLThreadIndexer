@@ -38,27 +38,47 @@ namespace ClThreadIndex
             String postContent = getSingleString(postSource, "<div class=" + dq + "formatted entry-content" + dq + ">", "</div>");
             List<String> links = getMultipleStrings(postContent, "http://", dq);
 
-            foreach (var link in links)
+            addLinks(links, this.PageNum);
+        }
+
+        //Acquire links from the passed array of links.
+        public void acquireLinks(List<Link> links)
+        {
+            bool linkFound;
+            foreach (var l in links)
             {
-                addLink(link, this.PageNum);
+                linkFound = false;
+                foreach (var myLink in Links)
+                {
+                    if (l.LinkURL == myLink.LinkURL)
+                    {
+                        linkFound = true;
+                        break;
+                    }
+                }
+                if (linkFound == false)
+                    Links.Add(new Link(l.LinkURL, l.PageNum));
             }
         }
 
-        //Add Link to Post
-        public void addLink(String linkURL, int pageNum)
+        //Add Links to Post
+        public void addLinks(List<String> links, int pageNum)
         {
-            bool linkFound = false;
-            foreach (var i in Links)
+            bool linkFound;
+            foreach (var l in links)
             {
-                if (i.LinkURL == linkURL)
+                linkFound = false;
+                foreach (var link in Links)
                 {
-                    linkFound = true;
-                    break;
+                    if (l == link.LinkURL)
+                    {
+                        linkFound = true;
+                        break;
+                    }
                 }
+                if (linkFound == false)
+                    Links.Add(new Link(l,pageNum));
             }
-
-            if (linkFound == false)
-                Links.Add(new Link(linkURL, pageNum));
         }
 
         //Finds the first occurence of string within argument postSource using provided tokens to search.
